@@ -6,7 +6,7 @@
 /*   By: gbryon <gbryon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 18:50:13 by gbryon            #+#    #+#             */
-/*   Updated: 2018/03/24 15:26:06 by gbryon           ###   ########.fr       */
+/*   Updated: 2018/03/24 17:58:10 by gbryon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ typedef struct s_param
  int lr; //left or right
  int run; //si run = 1, course ON, si = 0, course OFF : par defaut = 0
  int alt; //si alt = 0, accroupi, si = 1, debout : par defaut = 1
+
 
  int nb_lines;
  int nb_chars;

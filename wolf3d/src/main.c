@@ -6,7 +6,7 @@
 /*   By: gbryon <gbryon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 18:59:12 by gbryon            #+#    #+#             */
-/*   Updated: 2018/03/24 15:51:28 by gbryon           ###   ########.fr       */
+/*   Updated: 2018/03/24 17:36:12 by gbryon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,7 @@ void	refresh(t_param *p)
 	// p->win = mlx_new_window(p->mlx, p->width, p->height, "WOLF3D");
 	p->img = mlx_new_image(p->mlx, p->width, p->height);
 	p->data = mlx_get_data_addr(p->img, &p->bpp, &p->sz_ln, &p->endian);
-//	drawing(p);
- // mapping(p);.
+ mapping(p);
 	mlx_put_image_to_window(p->mlx, p->win, p->img, 0, 0);
 	mlx_destroy_image(p->mlx, p->img);
 	// mlx_stuff(p);
@@ -170,6 +169,13 @@ int mouse_event(int k, int x, int y, t_param *p)
 
 void init_param(t_param *p)
 {
+	p->init_posX = 2; // TO_DO definir position en fonction de la map(centre)
+	p->init_posY = 2; // TO_DO definir position en fonction de la map(centre)
+	p->dirX = -1;
+	p->dirY = 0;
+	p->planeX = 0;
+	p->planeY = 0.66; // a modif pour voir le fonctionnement
+
  p->ud = 0;
  p->lr = 0;
  p->run = 0;
