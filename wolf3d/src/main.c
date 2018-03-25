@@ -6,7 +6,7 @@
 /*   By: gbryon <gbryon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 18:59:12 by gbryon            #+#    #+#             */
-/*   Updated: 2018/03/24 17:36:12 by gbryon           ###   ########.fr       */
+/*   Updated: 2018/03/25 16:38:40 by gbryon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,38 +56,42 @@ int		check_file(t_param *p)
 	}
 	free(p->line);
 	p->total_chars = (p->nb_chars) * (p->nb_lines);
-	if (!(p->pt = malloc(sizeof(t_pt) * (p->total_chars + 1))))
-		return (-1);
+	// if (!(p->map = malloc(sizeof(t_pt) * (p->total_chars + 1))))
+	// 	return (-1);
 	return (0);
 }
 
-int		fill_t_pt(t_param *p)
+t_param	*display_init(t_param *p)
 {
 	char	**tab;
-	int		x;
-	int		y;
 	int		i;
+	int		nb;
+	int nb2;
 
 	i = 0;
-	y = 0;
-	while ((p->ret = get_next_line(p->fd, &(p->line))) > 0)
+	nb = 0;
+	nb2 = 0;
+	if (!(p->map = (int **)malloc(sizeof(int *)	* p->total_chars + 1)))
+		ft_putendl("Impossible action - Malloc initialisation issue");
+	while (get_next_line(p->fd, &(p->line)))
 	{
-		x = 0;
+		p->map[nb] = malloc(sizeof(int)	* p->nb_chars + 1);
 		tab = ft_strsplit(p->line, ' ');
-		while (tab[x] != NULL)
+		while (tab[i] != NULL)
 		{
-			p->pt[i].x = x;
-			p->pt[i].y = y;
-			p->pt[i].z = ft_atoi(tab[x]);
-			free(tab[x]);
+			p->map[nb][nb2] = ft_atoi(tab[i]);
+			printf("tab[i] = %s\t", tab[i]);
+			printf("map = %d   -- \n", p->map[nb][nb2]);
 			i++;
-			x++;
+			nb2++;
 		}
+		nb2 = 0;
+		nb++;
+		i = 0;
 		free(tab);
 		free(p->line);
-		y++;
 	}
-	return (0);
+	return (p);
 }
 
 int		parsing(t_param *p)
@@ -98,8 +102,8 @@ int		parsing(t_param *p)
 		return (-1);
 	close(p->fd);
 	p->fd = open(p->argv, O_RDONLY);
-	if (fill_t_pt(p) == -1)
-		return (-1);
+	display_init(p);
+	close(p->fd);
 	free(p->line);
 	return (0);
 }
@@ -109,6 +113,23 @@ int keycool(int k, t_param *p)
  printf("k[%d]\t", k);
  if (k == ESC)
   exit(0);
+	// if (k = FRONT)
+	// {
+	// 	p->stepX = 1;
+	// 	p->wallDistX = (p->square_initX + 1 - p->init_posX) * p->deltaDistX;
+	// }
+	// if (k == BACK)
+	// {
+	// 	if (p->rayDirX < 0)
+	// 	{
+	// 		p->stepX = -1;
+	// 		p->wallDistX = (p->init_posX - p->square_initX) * p->deltaDistX;
+	// 	}
+	// }
+	// if (k == MOVE_LEFT)
+	// {
+ //
+	// }
  return (0);
 }
 
@@ -169,13 +190,6 @@ int mouse_event(int k, int x, int y, t_param *p)
 
 void init_param(t_param *p)
 {
-	p->init_posX = 2; // TO_DO definir position en fonction de la map(centre)
-	p->init_posY = 2; // TO_DO definir position en fonction de la map(centre)
-	p->dirX = -1;
-	p->dirY = 0;
-	p->planeX = 0;
-	p->planeY = 0.66; // a modif pour voir le fonctionnement
-
  p->ud = 0;
  p->lr = 0;
  p->run = 0;

@@ -6,19 +6,19 @@
 #    By: gbryon <gbryon@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/02/13 08:42:33 by gbryon            #+#    #+#              #
-#    Updated: 2018/03/14 08:57:32 by gbryon           ###   ########.fr        #
+#    Updated: 2018/03/25 18:10:22 by gbryon           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 .PHONY: all, clean, fclean, re
 
-NAME = FdF
+NAME = wolf3d
 
 END=\033[0m
 OKC=\033[32m
 KOC=\033[31m
 
-FLAG = -Wall -Wextra -Werror
+#FLAG = -Wall -Wextra -Werror
 FRAM = -lmlx -framework OpenGL -framework AppKit
 
 OBJ_PATH = ./obj/
@@ -28,7 +28,7 @@ SRC_PATH = ./src/
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = wolf3d.h
-SRC_NAME =
+SRC_NAME = main.c mapping.c
 
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))
