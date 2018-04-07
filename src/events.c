@@ -24,10 +24,10 @@ int rotation(int k, double dir, double plane, t_param *p)
 	}
 	if (k == 124)
 	{
-		p->dirX = p->dirX * cos(p->rot_speed)	+ p->dirY * sin(p->rot_speed);
-		p->dirY = dir * sin(p->rot_speed)	- p->dirY * cos(p->rot_speed);
-		p->planeX = p->planeX * cos(p->rot_speed)	+ p->planeY * sin(p->rot_speed);
-		p->planeY = plane * sin(p->rot_speed)	- p->planeY * cos(p->rot_speed);
+		p->dirX = p->dirX * cos(-p->rot_speed)	- p->dirY * sin(-p->rot_speed);
+		p->dirY = dir * sin(-p->rot_speed)	+ p->dirY * cos(-p->rot_speed);
+		p->planeX = p->planeX * cos(-p->rot_speed)	- p->planeY * sin(-p->rot_speed);
+		p->planeY = plane * sin(-p->rot_speed)	+ p->planeY * cos(-p->rot_speed);
 	}
 
 	return (0);
@@ -40,16 +40,19 @@ if (k == ESC)
 	exit(0);
 if (k == 126 || k == 13)
 {
-	printf("init_posX[%f], dirX[%f]\t", p->init_posX, p->dirX);
-	p->init_posX += p->dirX * p->move_speed;
-	p->init_posY += p->dirY * p->move_speed;
-	printf("init_posX[%f], dirX[%f]\n", p->init_posX, p->dirX);
+	if (p->map[(int)(p->init_posX + p->dirX * p->move_speed)][(int)p->init_posY] != '1')
+		p->init_posX += p->dirX * p->move_speed;
+	if (p->map[(int)p->init_posX][(int)(p->init_posY + p->dirY * p->move_speed)] != '1')
+		p->init_posY += p->dirY * p->move_speed;
+	printf("map[%d][%d] = %d\n", (int)(p->init_posX), (int)p->init_posY, p->map[(int)(p->init_posX + p->dirX * p->move_speed)][(int)p->init_posY]);
+	// printf("init_posX[%f], dirX[%f]\n", p->init_posX, p->dirX);
 	}
 if (k == 125 || k == 1)
 {
-	// printf("init_posX[%d], dirX[]");
-	p->init_posX -= p->dirX * p->move_speed;
-	p->init_posY -= p->dirY * p->move_speed;
+	if (p->map[(int)(p->init_posX - p->dirX * p->move_speed)][(int)p->init_posY] != '1')
+		p->init_posX -= p->dirX * p->move_speed;
+	if (p->map[(int)p->init_posX][(int)(p->init_posY - p->dirY * p->move_speed)] != '1')
+		p->init_posY -= p->dirY * p->move_speed;
 }
 rotation(k, p->dirX, p->planeX, p);
 refresh(p);

@@ -18,8 +18,8 @@ void init_param(t_param *p)
  p->sz_ln = 4 * p->width;
  p->endian = 0;
  p->patate = 0;
- p->init_posX = 5; // TO_DO definir position en fonction de la map(centre)
- p->init_posY = 5; // TO_DO definir position en fonction de la map(centre)
+ p->init_posX = 2; // TO_DO definir position en fonction de la map(centre)
+ p->init_posY = 2; // TO_DO definir position en fonction de la map(centre)
 
 }
 
