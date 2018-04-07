@@ -22,6 +22,14 @@ int rotation(int k, double dir, double plane, t_param *p)
 		p->planeX = p->planeX * cos(p->rot_speed)	- p->planeY * sin(p->rot_speed);
 		p->planeY = plane * sin(p->rot_speed)	+ p->planeY * cos(p->rot_speed);
 	}
+	if (k == 124)
+	{
+		p->dirX = p->dirX * cos(p->rot_speed)	+ p->dirY * sin(p->rot_speed);
+		p->dirY = dir * sin(p->rot_speed)	- p->dirY * cos(p->rot_speed);
+		p->planeX = p->planeX * cos(p->rot_speed)	+ p->planeY * sin(p->rot_speed);
+		p->planeY = plane * sin(p->rot_speed)	- p->planeY * cos(p->rot_speed);
+	}
+
 	return (0);
 }
 
