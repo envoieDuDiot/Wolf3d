@@ -18,6 +18,7 @@ int main(int ac, char **av)
   if (!(p = malloc(sizeof(t_param) + 1)))
    return (0);
   init_param(p);
+  mapping_init(p);
   p->argv = av[1];
   if (parsing(p) == (-1))
    return (EXIT_FAILURE);

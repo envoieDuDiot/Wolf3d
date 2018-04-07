@@ -2,44 +2,41 @@
 
 void find_a_wall(t_param *p)
 {
- if (p->rayDirX < 0) /// Si le rayon est oriente vers la gauche
- {
+ if (p->rayDirX < 0)  {
    p->stepX = -1;
-   p->wallDistX = (p->rayPosX - p->square_initX) * p->deltaDistX; ///  On calcule la distance entre joueur et 1e prochain mur vertical
- }
- else ///Si le rayon est oriente vers la droite
- {
-   p->stepX = 1;
-   p->wallDistX = (p->square_initX + 1.0 - p->rayPosX) * p->deltaDistX; /// On calcule la distance entre joueur et 1e prochain mur vertical
- }
- ///Calcul le sens de la prochaine etape et la distance entre le joueur et le mur horizontal le plus proche en fonction de la prochaine etape y
- if (p->rayDirY < 0)
- {
-   p->stepY = -1;///  On recule
-   p->wallDistY = (p->rayPosY - p->square_initY) * p->deltaDistY;///  On calcule la distance entre le joueur et 1e prochain mur horizontal
+   p->wallDistX = (p->rayPosX - (double)p->square_initX) * p->deltaDistX;
  }
  else
  {
-   p->stepY = 1;///  On avance
-   p->wallDistY = (p->square_initY + 1.0 - p->rayPosY) * p->deltaDistY;/// On calcule la distance entre joueur et 1e prochain mur horizontal
+   p->stepX = 1;
+   p->wallDistX = ((double)p->square_initX + 1.0 - p->rayPosX) * p->deltaDistX;
  }
- ///lance de DDA = Digital Differential Analysis (algorithme de detection des murs)
- while (p->wallDetect == 0)
+ if (p->rayDirY < 0)
  {
-   ///Saute au prochain carre de la map soit vers la  direction x, soit vers la direction y en fonction du mur le plus proche
+   p->stepY = -1;
+   p->wallDistY = (p->rayPosY - (double)p->square_initY) * p->deltaDistY;
+ }
+ else
+ {
+   p->stepY = 1;
+   p->wallDistY = ((double)p->square_initY + 1.0 - p->rayPosY) * p->deltaDistY;
+ }
+ while (p->wallDetect != 1 && p->square_initY > 0 && \
+			p->square_initY < p->nb_chars && \
+			p->square_initX > 0 && p->square_initX <= p->nb_lines)
+ {
    if (p->wallDistX < p->wallDistY)
    {
      p->wallDistX += p->deltaDistX;
      p->square_initX += p->stepX;
-     p->compas = 0; ///Mur vertical
+     p->compas = 0;
    }
    else
    {
      p->wallDistY += p->deltaDistY;
      p->square_initY += p->stepY;
-     p->compas = 1; ///Mur vertical
+     p->compas = 1;
    }
-   ///Verifier si le rayon a detecte un mur
    if (p->map[p->square_initX][p->square_initY] > 0)
     p->wallDetect = 1;
   }
@@ -48,7 +45,6 @@ void find_a_wall(t_param *p)
 
 void draw_a_wall(int x, t_param *p)
 {
-  // Calcule la distance corrigée pour la projection
   if (p->compas == 0)
   {
 	  p->correc_dist = fabs((p->square_initX - p->rayPosX + (1 - p->stepX) / 2)
@@ -59,13 +55,15 @@ void draw_a_wall(int x, t_param *p)
 	  p->correc_dist = fabs((p->square_initY - p->rayPosY + (1 - p->stepY) / 2)
    / p->rayDirY);
   }
-  p->wall_height = p->height / (int)p->correc_dist;
+//  if (p->correc_dist <= 0.05)
+//    p->correc_dist = 0.05;
+  p->wall_height = fabs(p->height / p->correc_dist);
   p->draw_start = (p->height - p->wall_height) / 2;
-  p->draw_end = p->height - p->draw_start;
   if (p->draw_start < 0)
    p->draw_start = 0;
+  p->draw_end = p->wall_height / 2 + p->height / 2;
   if (p->draw_end >= p->height)
-   p->draw_end = p->height; // a verifier si bug d'affichage
+   p->draw_end = p->height - 1;
    color_a_wall(x, p);
 }
 
@@ -74,14 +72,14 @@ static int	color_wall(t_param *p)
 {
 	int		color;
 
-	if (p->compas == 0 && p->dirX >= 0)
-		color = 0x00B2FE;
+	if (p->compas == 0 && p->rayDirX >= 0)
+		color = 0x00B2FE; // bleu
 	else if (p->compas == 0 && p->rayDirX < 0)
-		color = 0xFE7700;
+		color = 0xFE7700; // orange
 	else if (p->compas == 1 && p->rayDirY >= 0)
-		color = 0xFE0000;
+		color = 0xFE0000; //rouge
 	else
-		color = 0xFEFE00;
+		color = 0xFEFE00; // jaune
 	if (p->compas == 1)
 		color = color / 2;
 	return (color);

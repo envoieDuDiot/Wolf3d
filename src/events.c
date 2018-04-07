@@ -13,29 +13,39 @@ void resize(t_param *p)
 	mlx_stuff(p);
 }
 
+int rotation(int k, double dir, double plane, t_param *p)
+{
+	if (k == 123)
+	{
+		p->dirX = p->dirX * cos(p->rot_speed)	- p->dirY * sin(p->rot_speed);
+		p->dirY = dir * sin(p->rot_speed)	+ p->dirY * cos(p->rot_speed);
+		p->planeX = p->planeX * cos(p->rot_speed)	- p->planeY * sin(p->rot_speed);
+		p->planeY = plane * sin(p->rot_speed)	+ p->planeY * cos(p->rot_speed);
+	}
+	return (0);
+}
+
 int keycool(int k, t_param *p)
 {
  printf("k[%d]\t", k);
- if (k == ESC)
-  exit(0);
-	// if (k = FRONT)
-	// {
-	// 	p->stepX = 1;
-	// 	p->wallDistX = (p->square_initX + 1 - p->init_posX) * p->deltaDistX;
-	// }
-	// if (k == BACK)
-	// {
-	// 	if (p->rayDirX < 0)
-	// 	{
-	// 		p->stepX = -1;
-	// 		p->wallDistX = (p->init_posX - p->square_initX) * p->deltaDistX;
-	// 	}
-	// }
-	// if (k == MOVE_LEFT)
-	// {
- //
-	// }
- return (0);
+if (k == ESC)
+	exit(0);
+if (k == 126 || k == 13)
+{
+	printf("init_posX[%f], dirX[%f]\t", p->init_posX, p->dirX);
+	p->init_posX += p->dirX * p->move_speed;
+	p->init_posY += p->dirY * p->move_speed;
+	printf("init_posX[%f], dirX[%f]\n", p->init_posX, p->dirX);
+	}
+if (k == 125 || k == 1)
+{
+	// printf("init_posX[%d], dirX[]");
+	p->init_posX -= p->dirX * p->move_speed;
+	p->init_posY -= p->dirY * p->move_speed;
+}
+rotation(k, p->dirX, p->planeX, p);
+refresh(p);
+return (0);
 }
 
 int mouse_event(int k, int x, int y, t_param *p)
@@ -52,7 +62,7 @@ int mouse_event(int k, int x, int y, t_param *p)
 				p->height -= 200;
 				p->sz_ln = 4 * p->width;
 			}
-			printf("height[%d], widht[%d]\n", p->height, p->width);
+			// printf("height[%d], widht[%d]\n", p->height, p->width);
 			resize(p);
 		return (0);
 }

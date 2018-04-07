@@ -39,7 +39,7 @@ all: $(NAME)
 $(NAME): $(OBJ)
 		@echo
 		@make -C $(LFT_PATH)
-		@gcc -o $(NAME) $(FRAM) -L $(LFT_PATH) -lft $^ -o $@
+		@gcc -o $(NAME) $(FRAM) $(FLAG) -L $(LFT_PATH) -lft $^ -o $@
 		@echo "$(OKC)$(NAME) CREATED & READY$(END)"
 		@echo "		            ZZZZZZZZZZZZZZZZZZZZZ\n		          ZZZZZ              ZZZZZZ\n		        ZZZZZ                    ZZZZ\n		      ZZZZZ                       ZZZZZ\n		    ZZZZZ                           ZZZZ\n		   ZZZZ                              ZZZZ\n		  ZZZ                                  ZZZ\n		 ZZZ                                    ZZZ\n		ZZZZ                                    ZZZ\n		ZZZ                                     ZZZ\n		ZZZ                                     ZZZ\n		ZZZ                                     ZZZ\n		ZZZ                             ZZ      ZZZ\n		ZZZ                           ZZZZZ     ZZZ\n		ZZZ                        ZZZZZZZZZ  ZZZZZ\n		ZZZZ    ZZZ              ZZZZZZZZZZZZ ZZZZ\n		ZZZZ   ZZZZZZ           ZZZZZZZZZZZZZ ZZZ\n		ZZZZ  ZZZZZZZZZZ       ZZZZZZZZZZZZZ  ZZ\n		ZZZZ  ZZZZZZZZZZZ      ZZZZZZZZZZZZ   ZZ\n		 ZZZ   ZZZZZZZZZZZ      ZZZZZZZZZZ    ZZ\n		 ZZZ    ZZZZZZZZZ ZZZZZ   ZZZZZZ    ZZZZ\n		  ZZZ    ZZZZZZZ  ZZZZZZ           ZZZZ\n		   ZZZZZ          Z  ZZZ     ZZZZZZZZZ\n		    ZZZZZZZZ          ZZ    ZZZZZZZZ\n		     ZZZZZZZZ             ZZZZZ\n		          ZZZ  Z   Z   Z  ZZZ\n		          ZZZ ZZZ ZZZ ZZZ ZZZ\n		          ZZZ ZZZ ZZZ ZZZ ZZZ\n		          ZZZ ZZZ ZZZ ZZZ ZZZ\n		           ZZZZZZZZZZZZZZZZZ\n		              ZZZZZZZZZZZ"Œ
 

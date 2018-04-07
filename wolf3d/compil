@@ -1,1 +1,0 @@
-gcc -lmlx -framework AppKit -framework OpenGL libft/libft.a src/main.c src/mapping.c -fsanitize=address -g3

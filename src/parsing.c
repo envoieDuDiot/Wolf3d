@@ -65,8 +65,8 @@ t_param	*display_init(t_param *p)
 		while (tab[i] != NULL)
 		{
 			p->map[nb][nb2] = ft_atoi(tab[i]);
-			printf("tab[i] = %s\t", tab[i]);
-			printf("map = %d   -- \n", p->map[nb][nb2]);
+			// printf("tab[i] = %s\t", tab[i]);
+			// printf("map = %d   -- \n", p->map[nb][nb2]);
 			i++;
 			nb2++;
 		}

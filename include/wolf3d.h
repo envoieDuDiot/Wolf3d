@@ -64,11 +64,16 @@ typedef struct s_param
 	double draw_end;
 	double deltaDistX;
 	double deltaDistY;
+	int patate;
 
  int ud; //up or down, avance ou recule
  int lr; //left or right
  int run; //si run = 1, course ON, si = 0, course OFF : par defaut = 0
  int alt; //si alt = 0, accroupi, si = 1, debout : par defaut = 1
+ double move_speed;
+ double rot_speed;
+ double old_dirX;
+ double old_dirY;
 
 
  int nb_lines;
