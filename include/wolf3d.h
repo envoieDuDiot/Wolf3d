@@ -79,6 +79,8 @@ typedef struct s_param
  int nb_lines;
  int nb_chars;
  int total_chars;
+ int position;
+ int m;
 
  // t_pt *pt;
 

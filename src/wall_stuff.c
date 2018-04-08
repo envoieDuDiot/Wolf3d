@@ -37,7 +37,7 @@ void find_a_wall(t_param *p)
      p->square_initY += p->stepY;
      p->compas = 1;
    }
-   if (p->map[p->square_initX][p->square_initY] > 0)
+   if (p->map[p->square_initX][p->square_initY] == 1)
     p->wallDetect = 1;
   }
 }

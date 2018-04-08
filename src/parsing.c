@@ -1,5 +1,67 @@
 #include "../include/wolf3d.h"
 
+ void map_control(t_param *p)
+ {
+ 	int x;
+ 	int y;
+
+ 	x = 0;
+ 	y = 0;
+  while (x < p->nb_chars)
+	{
+	 	if (p->map[0][x] != 1)
+	 	{
+	 		ft_putendl("Impossible action - Wrong Map 1");
+	 		exit(0);
+	 	}
+	 	x++;
+	}
+	x = 0;
+	while (x < p->nb_chars)
+	{
+		if (p->map[p->nb_lines - 1][x] != 1)
+		{
+			ft_putendl("Impossible action - Wrong Map 2");
+			exit(0);
+		}
+		x++;
+	}
+	x = 0;
+	while (y < p->nb_lines)
+	{
+		if (p->map[y][0] != 1)
+		{
+			ft_putendl("Impossible action - Wrong Map 3 ");
+			exit(0);
+		}
+		y++;
+	}
+	y = 0;
+	while (y < p->nb_lines)
+	{
+		if (p->map[y][p->nb_chars - 1] != 1)
+		{
+			ft_putendl("Impossible action - Wrong Map 4 ");
+			exit(0);
+		}
+		y++;
+	}
+	y = 0;
+	while (y < p->nb_lines)
+	{
+		while (x < p->nb_chars)
+		{
+			if (p->map[y][x] == 0)
+				return ;
+			x++;
+		}
+		x = 0;
+		y++;
+	}
+	ft_putendl("Impossible action - Wrong Map - no position ");
+	exit(0);
+}
+
 int		count_chars(char *line)
 {
 	int			nb_chars;
@@ -60,11 +122,17 @@ t_param	*display_init(t_param *p)
 		ft_putendl("Impossible action - Malloc initialisation issue");
 	while (get_next_line(p->fd, &(p->line)))
 	{
-		p->map[nb] = malloc(sizeof(int)	* p->nb_chars + 1);
+		p->map[nb] = (int *)malloc(sizeof(int)	* p->nb_chars + 1);
 		tab = ft_strsplit(p->line, ' ');
 		while (tab[i] != NULL)
 		{
 			p->map[nb][nb2] = ft_atoi(tab[i]);
+			if (p->position == 0 && p->map[nb][nb2] == 0)
+			{
+				p->init_posX = nb; // TO_DO definir position en fonction de la map(centre)
+				p->init_posY = nb2; // TO_DO definir position en fonction de la map(centre)
+				p->position = 1;
+			}
 			// printf("tab[i] = %s\t", tab[i]);
 			// printf("map = %d   -- \n", p->map[nb][nb2]);
 			i++;
@@ -76,6 +144,7 @@ t_param	*display_init(t_param *p)
 		free(tab);
 		free(p->line);
 	}
+	map_control(p);
 	return (p);
 }
 

@@ -18,13 +18,15 @@ void init_param(t_param *p)
  p->sz_ln = 4 * p->width;
  p->endian = 0;
  p->patate = 0;
- p->init_posX = 2; // TO_DO definir position en fonction de la map(centre)
- p->init_posY = 2; // TO_DO definir position en fonction de la map(centre)
+ p->position = 0;
+ // p->init_posX = 5; // TO_DO definir position en fonction de la map(centre)
+ // p->init_posY = 5; // TO_DO definir position en fonction de la map(centre)
 
 }
 
 void mapping_init(t_param *p)
 {
+  p->m = 0;
  p->dirX = -1;
  p->dirY = 0;
  p->planeX = 0;
@@ -48,8 +50,8 @@ void mapping_init(t_param *p)
  p->draw_end = 0;
  p->deltaDistX = 0;
  p->deltaDistY = 0;
- p->move_speed = 0.1;
- p->rot_speed = 0.1;
+ p->move_speed = 0.2;
+ p->rot_speed = 0.3;
  p->old_dirX = 0;
  p->old_dirY = 0;
 }

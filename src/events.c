@@ -35,25 +35,50 @@ int rotation(int k, double dir, double plane, t_param *p)
 
 int keycool(int k, t_param *p)
 {
- printf("k[%d]\t", k);
+
+	printf ("k[%d]\t", k);
+if (k == 46)
+{
+	if (p->m == 0) {
+		system("afplay ~/wolf3d/bonus/J.mp3 & ");
+		p->m = 1;
+	}
+	else {
+		system("killall afplay");
+		p->m = 0;
+	}
+
+}
+if (k == 257)
+{
+	if (p->move_speed == 0.2)
+		p->move_speed = 0.5;
+	else
+		p->move_speed = 0.2;
+}
 if (k == ESC)
 	exit(0);
 if (k == 126 || k == 13)
 {
-	if (p->map[(int)(p->init_posX + p->dirX * p->move_speed)][(int)p->init_posY] != '1')
+	if (p->map[(int)(p->init_posX + p->dirX * p->move_speed)][(int)p->init_posY] != 1)
 		p->init_posX += p->dirX * p->move_speed;
-	if (p->map[(int)p->init_posX][(int)(p->init_posY + p->dirY * p->move_speed)] != '1')
+	if (p->map[(int)p->init_posX][(int)(p->init_posY + p->dirY * p->move_speed)] != 1)
 		p->init_posY += p->dirY * p->move_speed;
-	printf("map[%d][%d] = %d\n", (int)(p->init_posX), (int)p->init_posY, p->map[(int)(p->init_posX + p->dirX * p->move_speed)][(int)p->init_posY]);
-	// printf("init_posX[%f], dirX[%f]\n", p->init_posX, p->dirX);
 	}
 if (k == 125 || k == 1)
 {
-	if (p->map[(int)(p->init_posX - p->dirX * p->move_speed)][(int)p->init_posY] != '1')
+	if (p->map[(int)(p->init_posX - p->dirX * p->move_speed)][(int)p->init_posY] != 1)
 		p->init_posX -= p->dirX * p->move_speed;
-	if (p->map[(int)p->init_posX][(int)(p->init_posY - p->dirY * p->move_speed)] != '1')
+	if (p->map[(int)p->init_posX][(int)(p->init_posY - p->dirY * p->move_speed)] != 1)
 		p->init_posY -= p->dirY * p->move_speed;
 }
+// if (k == 125 || k == 1)
+// {
+// 	if (p->map[(int)(p->init_posX - p->dirX * p->move_speed)][(int)p->init_posY] != 1)
+// 		p->init_posX -= p->dirX * p->move_speed;
+// 	if (p->map[(int)p->init_posX][(int)(p->init_posY - p->dirY * p->move_speed)] != 1)
+// 		p->init_posY -= p->dirY * p->move_speed;
+// }
 rotation(k, p->dirX, p->planeX, p);
 refresh(p);
 return (0);

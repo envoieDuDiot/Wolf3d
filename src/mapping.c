@@ -16,6 +16,8 @@ void mapping(t_param *p)
   p->square_initY = (int)p->rayPosY;
   p->deltaDistX = sqrt(pow(1, 2) + (pow(p->rayDirY, 2) / pow(p->rayDirX, 2)));
   p->deltaDistY = sqrt(pow(1, 2) + (pow(p->rayDirX, 2) / pow(p->rayDirY, 2)));
+  p->wallDetect = 0;
+  p->compas = 0;
   find_a_wall(p);
   draw_a_wall(x, p);
   x++;
