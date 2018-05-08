@@ -18,7 +18,7 @@ END=\033[0m
 OKC=\033[32m
 KOC=\033[31m
 
-#FLAG = -Wall -Wextra -Werror
+FLAG = -Wall -Wextra -Werror
 FRAM = -lmlx -framework OpenGL -framework AppKit
 
 OBJ_PATH = ./obj/
@@ -28,7 +28,7 @@ SRC_PATH = ./src/
 
 OBJ_NAME = $(SRC_NAME:.c=.o)
 INC_NAME = wolf3d.h
-SRC_NAME = events.c init.c main.c mapping.c mlx_stuff.c parsing.c usefull.c wall_stuff.c
+SRC_NAME = events.c events2.c init.c main.c mapping.c mlx_stuff.c parsing.c usefull.c wall_stuff.c parsing_control.c
 
 SRC = $(addprefix $(SRC_PATH),$(SRC_NAME))
 OBJ = $(addprefix $(OBJ_PATH),$(OBJ_NAME))

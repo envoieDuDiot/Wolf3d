@@ -6,17 +6,12 @@
 /*   By: gbryon <gbryon@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/03/16 18:50:13 by gbryon            #+#    #+#             */
-/*   Updated: 2018/03/25 17:32:55 by gbryon           ###   ########.fr       */
+/*   Updated: 2018/05/08 12:30:49 by gbryon           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #ifndef WOLF3D_H
 # define WOLF3D_H
-
-// # define HEIGHT 1000
-// # define WIDTH 1000
-
 # define ESC	53
 # define FRONT 13
 # define BACK	1
@@ -30,120 +25,155 @@
 # include "../libft/libft.h"
 # include "mlx.h"
 
-// typedef struct	s_pt
-// {
-// 	int		x;
-// 	int		y;
-// 	int		z;
-// }				t_pt;
-
-typedef struct s_param
+typedef struct	s_param
 {
-	double init_posX;
-	double init_posY;
-	double dirX;
-	double dirY;
-	double planeX;
-	double planeY;
-	double view;
-	double rayPosX;
-	double rayPosY;
-	double rayDirX;
-	double rayDirY;
-	double wallDistX;
-	double wallDistY;
-	int square_initX;
-	int square_initY;
-	int stepX;
-	int stepY;
-	int wallDetect;
-	int compas;
-	double correc_dist;
-	double wall_height;
-	double draw_start;
-	double draw_end;
-	double deltaDistX;
-	double deltaDistY;
-	int patate;
+	int			i;
+	double		init_posx;
+	double		init_posy;
+	double		dirx;
+	double		diry;
+	double		planex;
+	double		planey;
+	double		view;
+	double		rayposx;
+	double		rayposy;
+	double		raydirx;
+	double		raydiry;
+	double		walldistx;
+	double		walldisty;
+	int			square_initx;
+	int			square_inity;
+	int			stepx;
+	int			stepy;
+	int			walldetect;
+	int			compas;
+	double		correc_dist;
+	double		wall_height;
+	double		draw_start;
+	double		draw_end;
+	double		deltadistx;
+	double		deltadisty;
+	int			patate;
 
- int ud; //up or down, avance ou recule
- int lr; //left or right
- int run; //si run = 1, course ON, si = 0, course OFF : par defaut = 0
- int alt; //si alt = 0, accroupi, si = 1, debout : par defaut = 1
- double move_speed;
- double rot_speed;
- double old_dirX;
- double old_dirY;
+	int			ud;
+	int			lr;
+	int			run;
+	int			alt;
+	double		move_speed;
+	double		rot_speed;
+	double		old_dirx;
+	double		old_diry;
 
+	int			nb_lines;
+	int			nb_chars;
+	int			total_chars;
+	int			position;
+	int			m;
 
- int nb_lines;
- int nb_chars;
- int total_chars;
- int position;
- int m;
+	char		*argv;
+	int			fd;
+	int			ret;
+	char		*line;
+	int			**map;
 
- // t_pt *pt;
+	void		*mlx;
+	void		*win;
+	void		*img;
+	int			bpp;
+	int			endian;
+	int			sz_ln;
+	char		*data;
+	int			height;
+	int			width;
 
- char *argv;
- int fd;
- int ret;
- char *line;
-	int **map;
+	int			r;
+	int			g;
+	int			b;
 
- void         *mlx;
- void         *win;
- void *img;
- int			bpp;
- int			endian;
- int			sz_ln;
- char		*data;
-	int height;  // resize la taille de la fenetre en appuyant sur le point grisé
-	int width;  // resize la taille de la fenetre en appuyant sur le point grisé
+}				t_param;
 
-	int r;
-	int g;
-	int b;
+/*
+** ######################   init.c   ######################
+*/
 
-}              t_param;
+void			init_param(t_param *p);
+void			mapping_init(t_param *p);
 
-/* ######################   init.c   ###################### */
+/*
+** ________________________________________________________
+** ###################   mlx_stuff.c   ####################
+*/
 
-void init_param(t_param *p);
-void mapping_init(t_param *p);
+void			refresh(t_param *p);
+void			mlx_stuff(t_param *p);
 
-/* ###################   mlx_stuff.c   #################### */
+/*
+** ________________________________________________________
+** #####################   events.c   #####################
+*/
 
-void	refresh(t_param *p);
-void	mlx_stuff(t_param *p);
+int				mouse_event(int k, int x, int y, t_param *p);
+int				keycool(int k, t_param *p);
+int				closing(t_param *p);
+void			resize(t_param *p);
 
-/* #####################   events.c   ##################### */
+/*
+** ________________________________________________________
+** #####################   events2.c   ####################
+*/
 
-int mouse_event(int k, int x, int y, t_param *p);
-int keycool(int k, t_param *p);
-int closing(t_param *p);
-void resize(t_param *p);
+int				closing(t_param *p);
+void			resize(t_param *p);
 
-/* ####################   parsing.c   #################### */
+/*
+** ________________________________________________________
+** ####################   parsing.c   #####################
+*/
 
-int		count_chars(char *line);
-int		check_file(t_param *p);
-t_param	*display_init(t_param *p);
-int		parsing(t_param *p);
+void			free_parsing(t_param *p, char **tab);
+void			pos_init(t_param *p, int nb, int nb2);
+int				count_chars(char *line);
+int				check_file(t_param *p);
+void			display_init(t_param *p);
+int				parsing(t_param *p);
 
-/* ####################   usefull.c   #################### */
+/*
+** ________________________________________________________
+** ################   parsing_control.c   #################
+*/
 
-int		rgb(char r, char g, char b);
-void	put_pixel(t_param *p, int x, int y, int color);
+void			first_control(t_param *p, int x);
+void			second_control(t_param *p, int y);
+void			map_control(t_param *p);
+void			free_parsing(t_param *p, char **tab);
+void			pos_init(t_param *p, int nb, int nb2);
 
-/* ##################   wall_stuff.c   ################## */
+/*
+** ________________________________________________________
+** ####################   usefull.c   #####################
+*/
 
-void find_a_wall(t_param *p);
-void draw_a_wall(int x, t_param *p);
-static int	color_wall(t_param *p);
-static void	color_a_wall(int x, t_param *p);
+int				rgb(char r, char g, char b);
+void			put_pixel(t_param *p, int x, int y, int color);
 
-/* ###################   mapping.c   ################### */
+/*
+** ________________________________________________________
+** ##################   wall_stuff.c   ####################
+*/
+void			wall_verif(t_param *p);
+void			find_a_wall(t_param *p);
+void			draw_a_wall(int x, t_param *p);
+int				color_wall(t_param *p);
+void			color_a_wall(int x, t_param *p);
 
-void mapping(t_param *p);
+/*
+** ________________________________________________________
+** ####################   mapping.c   #####################
+*/
 
+void			mapping(t_param *p);
+
+/*
+** ________________________________________________________
+*/
 #endif
